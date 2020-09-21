@@ -10,6 +10,8 @@ import UIKit
 
 class AddSpendingViewController: UIViewController {
 
+    /// La propriété va récupérée la liste des participants
+    /// J'initialise ma propriétés persons avec ma propriété calculée Person.all qui me renvoie tous les objets dans la BDD
     var persons = Person.all
 
     @IBOutlet weak var contentTextField: UITextField!
@@ -25,11 +27,14 @@ class AddSpendingViewController: UIViewController {
 
         // create entity in a context
         let spending = Spending(context: AppDelegate.viewContext)
+        
         // give values to its properties
         spending.content = content
         spending.amount = amount
+        
         // use relationship attribute to get a value
         spending.person = getPerson()
+        
         // save context
         try? AppDelegate.viewContext.save()
 
@@ -46,6 +51,7 @@ class AddSpendingViewController: UIViewController {
     }
 }
 
+/// On rempli le picker view avec le tableau persons :
 extension AddSpendingViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -59,6 +65,8 @@ extension AddSpendingViewController: UIPickerViewDataSource, UIPickerViewDelegat
         return persons[row].name
     }
 }
+
+/// disparition du clavier
 
 extension AddSpendingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

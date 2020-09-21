@@ -9,6 +9,9 @@
 import Foundation
 import CoreData
 
+
+/// class qui gère les dépenses
+
 class Spending: NSManagedObject {
     static var all: [[Spending]] {
         // create request

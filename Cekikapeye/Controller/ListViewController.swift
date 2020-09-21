@@ -36,6 +36,8 @@ extension ListViewController: UITableViewDataSource {
 
         let spending = spendings[indexPath.section][indexPath.row]
         cell.textLabel?.text = spending.content
+        
+        /// on utilise la monnaie qu'on a sauvegardée dans UserDefaults
         cell.detailTextLabel?.text = "\(spending.amount) \(SettingsService.currency)"
 
         return cell

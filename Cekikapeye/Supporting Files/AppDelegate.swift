@@ -14,8 +14,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    /// Cette propriété persistentContainer nous permet d'installer Core Data :
     lazy var persistentContainer: NSPersistentContainer = {
+        /// let container = NSPersistentContainer(name: "Cekikapeye") :
+        /// pour que NSPersistentContainer fasse son travail (créer les différents fichiers, initialiser le NSManagedObjectModel et le NSPersistentStoreCoordinator) il faut donner le nom de notre fichier.
         let container = NSPersistentContainer(name: "Cekikapeye")
+        
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
@@ -23,11 +27,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         return container
     }()
-
+    
+    /// Pour accéder à notre propriété persistentContainer :
+    /// comme la propriété delegate de UIApplication est de type UIApplicationDelegate il faut controller son type avec as!
+    /// grâce à cette écriture de persistentContainer, on va pouvoir y accéder comme ceci : AppDelegate.persistentContainer
     static var persistentContainer: NSPersistentContainer {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer
     }
 
+    /// Pour récupérer le context car c'est dans le contexte que nous manipulons les données :
+    /// elle est de type NSManagedObjectContext de la classe NSPersistentContainer
+    /// cette propriété retourne un contexte à utiliser dans le Main thread
     static var viewContext: NSManagedObjectContext {
         return persistentContainer.viewContext
     }

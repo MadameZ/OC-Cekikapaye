@@ -36,6 +36,7 @@ class PeopleViewController: UIViewController {
 }
 
 extension PeopleViewController: UITextFieldDelegate {
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         addPerson()
@@ -57,11 +58,19 @@ extension PeopleViewController: UITextFieldDelegate {
     }
 
     private func savePerson(named name: String) {
-        // create entity instance with context
+        
+        // 1. create entity instance with context :
+        /// Lorsqu'on a installé Core Data on a récupéré un contexte de persistentContainer via la propriété viewContext. On en avait fait une propriété statique de façon à pouvoir récupérer notre contexte en écrivant simplement AppDelegate.viewContext
+        /// J'ai un objet Person ajouté à mon contexte
         let person = Person(context: AppDelegate.viewContext)
-        // use
+        
+        // 2. use :
+        /// Je peux donner une valeur à mon attribut name
         person.name = name
-        // save ocntext
+        
+        // 3. save context :
+        /// Pour que les changements (ajouts/suppressions/modifications d'objet) soient inscrits dans notre BDD il faut savegarder notre contexte avec la méthode save.
+        /// cette méthode save( ) peut renvoyer une erreur donc il faut l'utiliser avec un try et utiliser un do/catch pour gérer les erreurs et afficher une alerte si la sauvegarder échoue.
         do { try AppDelegate.viewContext.save() }
         catch { print("name not saved")}
     }
