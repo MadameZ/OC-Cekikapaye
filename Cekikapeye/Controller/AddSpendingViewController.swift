@@ -26,6 +26,7 @@ class AddSpendingViewController: UIViewController {
         }
 
         // create entity in a context
+        /// On initialise notre objet en lui passant le context
         let spending = Spending(context: AppDelegate.viewContext)
         
         // give values to its properties
@@ -33,6 +34,7 @@ class AddSpendingViewController: UIViewController {
         spending.amount = amount
         
         // use relationship attribute to get a value
+        /// Ajout de la relation. On récupère la propriété person 
         spending.person = getPerson()
         
         // save context
@@ -43,6 +45,7 @@ class AddSpendingViewController: UIViewController {
 
     private func getPerson() -> Person? {
         if persons.count > 0 {
+            /// On récupère la person choisir par l'utilisateur en utilisant l'index de la ligne sélectionnée par l'utilisateur dans le Picker View
             let index = personPickerView.selectedRow(inComponent: 0)
             return persons[index]
         } else {

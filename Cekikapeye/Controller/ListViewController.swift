@@ -12,9 +12,11 @@ import CoreData
 class ListViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-
+    
+    /// On récupère les données :
     var spendings = Spending.all
 
+    /// Nos données seront récupérées sur la base à chaque fois que la vue apparaît pour que les données soient mises à jour :
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         spendings = Spending.all
@@ -33,17 +35,20 @@ extension ListViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SpendingCell", for: indexPath)
-
+        
+        /// Données issues de Core Data
         let spending = spendings[indexPath.section][indexPath.row]
         cell.textLabel?.text = spending.content
         
-        /// on utilise la monnaie qu'on a sauvegardée dans UserDefaults
+        /// SettingsService.currency : on utilise la monnaie qu'on a sauvegardée dans UserDefaults
         cell.detailTextLabel?.text = "\(spending.amount) \(SettingsService.currency)"
 
         return cell
     }
+    
     /// Modifier le nom de la section.
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
         // get the person's name
         guard let person = spendings[section].first?.person, let name = person.name else {
             return nil
@@ -62,6 +67,7 @@ extension ListViewController: UITableViewDataSource {
 }
 // delete cells
 extension ListViewController {
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // delete core data object

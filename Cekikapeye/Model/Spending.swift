@@ -13,10 +13,13 @@ import CoreData
 /// class qui gère les dépenses
 
 class Spending: NSManagedObject {
+    
+    /// On récupère toutes les dépenses dans une propriété statique calculée all :
     static var all: [[Spending]] {
         // create request
         let request: NSFetchRequest<Spending> = Spending.fetchRequest()
         /// Pour mettre les données par ordre croissant.
+        /// Ici je veux d'abord que les données soient ordonées par participant et ensuite pour chaque participant je souhaite obtnir les données rangées par ordre croissant.
         request.sortDescriptors = [
         NSSortDescriptor(key: "person.name", ascending: true),
         NSSortDescriptor(key: "amount", ascending: true)]
@@ -48,3 +51,5 @@ extension Array where Element == Spending {
         return result
     }
 }
+
+
